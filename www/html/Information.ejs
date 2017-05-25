@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>come back cat</title>
+	    <meta charset="UTF-8">
+        <meta name="renderer" content="webkit">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="img/favicon.ico" mce_href="favicon.ico" rel="icon" type="image/x-icon" /> 
+        <!-- css -->
+        <link rel="stylesheet" href="css/awesome/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="css/style.css" id="LoginStyle">
+        <!-- module -->
+        <script src="js/module/jquery.js"></script>
+        <script src="js/module/json.js"></script>
+        <!-- main -->
+        <script src="js/tools.js"></script>
+        <script src="js/Information.js"></script>
+    </head>
+    <body>
+        <div class="page-menu">
+            <div class="width">
+                <div class="page-menu-tab">
+                    <a href="#">Home</a>
+                    <a href="#">Information</a>
+                    <a href="#">Community</a>
+                </div>
+                <div class="page-menu-user">
+                    <img src="<%= data.UserLogo %>" class="page-menu-user-logo">
+                    <i class="fa fa-caret-down page-menu-user-down"></i>
+                </div>
+                <div class="page-menu-user-data">
+                    <span>Panda</span>
+                    <span>Personal</span>
+                    <span>Exit</span>
+                </div>
+            </div>
+        </div>
+        <div class="information">
+            <div class="width">
+                <% if (data.GetType && data.GetType != 'Information') { %>
+                    <div class="upinfo">
+                        <% if (data.GetType != 'Lose') { %>
+                            <div class="newmain-title" data="Lose">I am looking for...</div>
+                        <% }else if (data.GetType != 'Found'){ %>
+                            <div class="newmain-title"  data="Found">I have found the!</div>
+                        <% } %>
+                        <div class="newmain-title-note">Fill in your relevant information here or upload a picture of the cat</div>
+                        <div class="upinfo-body">
+                            <div class="upinfo-body-upimg">
+                                <i class="fa fa-file-image-o"></i>
+                            </div>
+                            <div class="upinfo-body-note">
+                                <textarea></textarea>
+                            </div>
+                        </div>
+                        <div class="upinfo-emit">
+                            <button>Submit</button>
+                        </div>
+                    </div>
+                <% } %>
+                <div class="information-page-switch">
+                    <button id="information-page-switch-on" data="Lose">I'm looking for</button>
+                    <button data="Found">I have found the</button>
+                </div>
+                <div class="information-page">
+                    <% for (let i of data.news) { %>
+                        <div class="information-page-num">
+                            <span class="title"><%= i.title %></span>
+                            <p class="text"><%= i.body.slice(100) %></p>
+                            <div class="information-page-data">
+                                <span><i class="fa fa-clock-o"></i><%= i.time %></span>
+                                <span><i class="fa fa-eye"></i><%= i.eye %></span>
+                                <span><i class="fa fa-commenting"></i><%= i.commenting %></span>
+                            </div>
+                        </div>
+                    <% } %>
+                </div>
+                <div class="setpage">
+                    <div class="setpage-next">
+                        <button>next</button>
+                    </div>
+                    <div class="setpage-sum">
+                        <input placeholder="<%= data.page %>" id="page-limit"> / <%= data.sum %>
+                    </div>
+                </div>
+                <div class="bottom"></div>
+            </div>
+        </div>
+    </body>
+</html>
