@@ -4,20 +4,21 @@
 </div>
 <div class="information-page">
     <div data-bind='foreach: data'>
-
-        <div class="info-box">
-            <div class="info-box-image">
-                <img data-bind="attr: {src: image}" />
-            </div>
-            <div class="info-box-info">
-                <h1 data-bind='text:title'></h1>
-                <p>location: <span data-bind='text:location'></span></p>
-                <p>lostDate: <span data-bind='text:eventDate'></span></p>
-                <div class="info-box-bot">
-                    <span><i class="fa fa-clock-o"></i><span data-bind='text:postDate'></span></span>
+        <a data-bind="attr: { href: '/information/report/'+report_id }">
+            <div class="info-box">
+                <div class="info-box-image">
+                    <img data-bind="attr: {src: image}" />
+                </div>
+                <div class="info-box-info">
+                    <h1 data-bind='text:title'></h1>
+                    <p>location: <span data-bind='text:location'></span></p>
+                    <p>lostDate: <span data-bind='text:eventDate'></span></p>
+                    <div class="info-box-bot">
+                        <span><i class="fa fa-clock-o"></i><span data-bind='text:postDate'></span></span>
+                    </div>
                 </div>
             </div>
-        </div>
+        </a>
     </div>
     <div class="clear"></div>
 </div>
