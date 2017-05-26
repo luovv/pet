@@ -1,73 +1,112 @@
 $().ready(function(){
     function InfoViewModel(){
         self = this;
-        this.username = ko.observable("");
-        this.email = ko.observable("");
-        this.password = ko.observable("");
+        this.data = ko.observable();
+        this.title = ko.observable("");
         this.location = ko.observable("");
+        this.eventDate = ko.observable("");
+        this.species = ko.observable("");
+        this.description = ko.observable("");
+        this.image = "";
 
-        this.isSignin=ko.observable(false);
-        this.isSignup=ko.observable(true);
-
-        this.signupErrorMsg=ko.observable();
-        this.signinErrorMsg=ko.observable();
-
-        this.submitSignup = function(){
+        this.submitLost = function () {
             $.ajax({
                 type: "POST",
                 data: JSON.stringify({
-                    username: this.username(),
-                    email: this.email(),
-                    password: this.password(),
-                    location: this.location()
+                    title: this.title(),
+                    location: this.location(),
+                    eventDate: this.eventDate(),
+                    species: this.species(),
+                    description: this.description(),
+                    image: this.image
                 }),
-                url: "/signup",
+                url: "/information/submitLost",
                 contentType:'application/json',
                 success: function(result) {
-                    if('error' in result){
-                        self.signupErrorMsg(result.error);
-                    }
-                    else{
-                        window.location.href = "/";
-                    }
+                    alert(result);
+                },
+                error: function(result) {
+                    alert("connection error");
+                }
+            });
+        };
+        this.submitFound = function () {
+            $.ajax({
+                type: "POST",
+                data: JSON.stringify({
+                    title: this.title(),
+                    location: this.location(),
+                    eventDate: this.eventDate(),
+                    species: this.species(),
+                    description: this.description(),
+                    image: this.image
+                }),
+                url: "/information/submitFound",
+                contentType:'application/json',
+                success: function(result) {
+                    alert(result);
+                },
+                error: function(result) {
+                    alert("connection error");
+                }
+            });
+        };
+
+        this.loadLost = function () {
+            $.ajax({
+                type: "GET",
+                url: "/information/lost",
+                contentType:'application/json',
+                success: function(result) {
+                    self.data(result);
+
                 },
                 error: function(result) {
                     self.signupErrorMsg("connection error");
                 }
             });
         };
-        this.submitSignin = function(){
+        this.loadFound = function () {
             $.ajax({
-                type: "POST",
-                data: JSON.stringify({
-                    email: this.email(),
-                    password: this.password()
-                }),
-                url: "/signin",
+                type: "GET",
+                url: "/information/found",
                 contentType:'application/json',
                 success: function(result) {
-                    if('error' in result){
-                        self.signinErrorMsg(result.error);
-                    }
-                    else{
-                        window.location.href = "/";
-                    }
+                    self.data(result);
                 },
                 error: function(result) {
                     self.signupErrorMsg("connection error");
                 }
             });
         };
-        this.switchSign = function(){
-            self.isSignin(!self.isSignin());
-            self.isSignup(!self.isSignup());
-        };
+        $.ajax({
+            type: "GET",
+            url: "/information/lost",
+            contentType:'application/json',
+            success: function(result) {
+                self.data(result);
+            },
+            error: function(result) {
+                self.signupErrorMsg("connection error");
+            }
+        });
+        if(document.getElementById('upinfo-body-upimg')) {
+            document.getElementById('upinfo-body-upimg').onchange = function () {
+                var file = document.getElementById('upinfo-body-upimg').files[0];
+                if (file) {
+                    var xhr = new XMLHttpRequest();
+                    var fd = new FormData(document.getElementById('upinfo-body-upimg-form'));
+                    xhr.addEventListener("load", function () {
+                        $('.upinfo-body-upimg').css('background-image', 'url(/image/' + file.name + ')');
+                        self.image = '/image/' + file.name;
+                    }, false);
+                    xhr.open("POST", "/information/upImage");
+                    xhr.send(fd);
+                }
+            };
+        }
     }
 
-
-    $.get('/user', function(data){
-        console.log(data)
-    });
     ko.applyBindings(new InfoViewModel());
 
     // var SetDOM = function(data, set){
@@ -126,18 +165,7 @@ $().ready(function(){
     //         }
     //     })
     // })
-    // document.getElementById('upinfo-body-upimg').onchange = function(){
-    //     var file = document.getElementById('upinfo-body-upimg').files[0]
-    //     if(file){
-    //         var xhr = new XMLHttpRequest()
-    //         var fd = new FormData(document.getElementById('upinfo-body-upimg-form'))
-    //         xhr.addEventListener("load", function(){
-    //             $('.upinfo-body-upimg').css('background-image', 'url(/updata/' + file.name +')')
-    //         }, false);
-    //         xhr.open("POST", "/upImage")
-    //         xhr.send(fd)
-    //     }
-    // }
+
     // $('.upinfo-emit button').click(function(){
     //     var file = document.getElementById('upinfo-body-upimg').files[0]
     //     var type = $('.newmain-title').attr('data')

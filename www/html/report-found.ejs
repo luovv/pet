@@ -1,0 +1,41 @@
+<div class="upinfo">
+    <div class="newmain-title" data="Lose">I am looking for...</div>
+    <div class="newmain-title-note">Fill in your relevant information here or upload a picture of the cat</div>
+
+    <div class="report-box row">
+        <div class="col-xs-6 report-left upinfo-body-upimg">
+            <form id="upinfo-body-upimg-form" enctype="multipart/form-data" method="post" action="/upImage">
+                <input type="file" id="upinfo-body-upimg" name="file">
+            </form>
+            <i class="fa fa-file-image-o"></i>
+        </div>
+        <div class="col-xs-6 report-right">
+            <form>
+                <div class="form-group">
+                    <!--<label>title</label>-->
+                    <input data-bind="value: title" class="form-control" placeholder="Title">
+                </div>
+                <div class="form-group">
+                    <!--<label>location</label>-->
+                    <input data-bind="value: location" class="form-control" placeholder="Location">
+                </div>
+                <div class="form-group">
+                    <!--<label>date</label>-->
+                    <input data-bind="value: eventDate" class="form-control" placeholder="Found Date">
+                </div>
+                <div class="form-group">
+                    <!--<label>Breed</label>-->
+                    <input data-bind="value: species" class="form-control" placeholder="Breed">
+                </div>
+                <div class="form-group">
+                    <!--<label>Description</label>-->
+                    <textarea data-bind="value: description" class="form-control" placeholder="Description"></textarea>
+                </div>
+                <div class="upinfo-emit">
+                    <button type="button" data-bind="click:submitFound">Submit</button>
+                </div>
+            </form>
+            <!--<textarea placeholder="You want to say"></textarea>-->
+        </div>
+    </div>
+</div>

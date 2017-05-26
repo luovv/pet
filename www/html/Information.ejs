@@ -5,77 +5,15 @@
 <%- include nav.ejs %>
 <div class="information">
     <div class="width">
-        <!--<% if (data.GetType && data.GetType != 'Information') { %>-->
-        <!--<div class="upinfo">-->
-            <!--<% if (data.GetType == 'Lose') { %>-->
-            <!--<div class="newmain-title" data="Lose">I am looking for...</div>-->
-            <!--<div class="newmain-title-note">Fill in your relevant information here or upload a picture of the cat</div>-->
-            <!--<% }else if (data.GetType == 'Found'){ %>-->
-            <!--<div class="newmain-title"  data="Found">I have found the!</div>-->
-            <!--<div class="newmain-title-note">Fill in your relevant information here or upload a picture of the cat</div>-->
-            <!--<% } %>-->
-            <!--<div class="upinfo-body">-->
-                <!--<input placeholder="Your title" class="upinfo-body-title">-->
-                <!--<div class="upinfo-body-upimg">-->
-                    <!--<form id="upinfo-body-upimg-form" enctype="multipart/form-data" method="post" action="/upImage">-->
-                        <!--<input type="file" id="upinfo-body-upimg" name="file">-->
-                    <!--</form>-->
-                    <!--<i class="fa fa-file-image-o"></i>-->
-                <!--</div>-->
-                <!--<div class="upinfo-body-note">-->
-                    <!--<textarea placeholder="You want to say"></textarea>-->
-                <!--</div>-->
-            <!--</div>-->
-            <!--<div class="upinfo-emit">-->
-                <!--<button>Submit</button>-->
-            <!--</div>-->
-        <!--</div>-->
-        <!--<% if (data.GetType == 'Lose') { %>-->
-        <!--<div class="information-page-switch">-->
-            <!--<button data="Lose">I'm looking for</button>-->
-            <!--<button id="information-page-switch-on" data="Found">I have found the</button>-->
-        <!--</div>-->
-        <!--<% }else if (data.GetType == 'Found'){ %>-->
-        <!--<div class="information-page-switch">-->
-            <!--<button id="information-page-switch-on" data="Lose">I'm looking for</button>-->
-            <!--<button data="Found">I have found the</button>-->
-        <!--</div>-->
-        <!--<% } %>-->
-        <!--<% }else{ %>-->
-        <!--<div class="information-page-switch">-->
-            <!--<button id="information-page-switch-on" data="Lose">I'm looking for</button>-->
-            <!--<button data="Found">I have found the</button>-->
-        <!--</div>-->
-        <!--<% } %>-->
-        <div class="information-page-switch">
-            <button id="information-page-switch-on" data="Lose">I'm looking for</button>
-            <button data="Found">I have found the</button>
-        </div>
-        <div class="information-page">
-            <% for (let i of data) { %>
-                <%- include information-box.ejs %>
-            <% } %>
-            <div class="clear"></div>
-        </div>
+        <% if(data.type == 'reportLost') { %>
+            <%- include report-lost.ejs %>
+        <% }else if(data.type == 'reportFound'){ %>
+            <%- include report-found.ejs %>
+        <% } %>
 
-        <div class="information-page">
-            <% for (let i of data) { %>
-            <%- include information-box.ejs %>
-            <% } %>
-            <div class="clear"></div>
-        </div>
-
-        <!--<div class="setpage">-->
-            <!--<div class="setpage-next">-->
-                <!--<button id="page-limit-next">next</button>-->
-            <!--</div>-->
-            <!--<div class="setpage-sum">-->
-                <!--&lt;!&ndash;<input placeholder="<%= data.page %>" id="page-limit"> / <%= data.sum %>&ndash;&gt;-->
-            <!--</div>-->
-        <!--</div>-->
-        <!--<div class="bottom"></div>-->
+        <%- include information-box.ejs %>
     </div>
 </div>
-<script src="js/information.js"></script>
+<script src="/js/information.js"></script>
 </body>
 </html>

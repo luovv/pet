@@ -1,16 +1,23 @@
-<div class="info-box">
-    <div class="info-box-image">
-        <img src="<%= i.image %>" />
-    </div>
-    <div class="info-box-info">
-        <h1><%= i.title %></h1>
-        <!--<p class="text"><%= i.description %></p>-->
-        <p>location: <%= i.location %></p>
-        <p>lostDate: <%= i.eventDate %></p>
-        <div class="info-box-bot">
-            <span><i class="fa fa-clock-o"></i><%= i.postDate %></span>
-            <!--<span><i class="fa fa-eye"></i><%= i.eye %></span>-->
-            <!--<span><i class="fa fa-commenting"></i><%= i.commenting %></span>-->
+<div class="information-page-switch">
+    <button data-bind="click:loadLost" id="information-page-switch-on">I'm looking for</button>
+    <button data-bind="click:loadFound">I have found the</button>
+</div>
+<div class="information-page">
+    <div data-bind='foreach: data'>
+
+        <div class="info-box">
+            <div class="info-box-image">
+                <img data-bind="attr: {src: image}" />
+            </div>
+            <div class="info-box-info">
+                <h1 data-bind='text:title'></h1>
+                <p>location: <span data-bind='text:location'></span></p>
+                <p>lostDate: <span data-bind='text:eventDate'></span></p>
+                <div class="info-box-bot">
+                    <span><i class="fa fa-clock-o"></i><span data-bind='text:postDate'></span></span>
+                </div>
+            </div>
         </div>
     </div>
+    <div class="clear"></div>
 </div>

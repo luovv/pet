@@ -1,5 +1,6 @@
 var express = require('express');
 var bodyParser = require('body-parser');
+var multer = require('multer')
 var router = express.Router();
 
 var sqlite3 = require('sqlite3').verbose();
@@ -7,16 +8,116 @@ var sqlite3 = require('sqlite3').verbose();
 router.use(bodyParser.json());
 
 router.get('/',function (req, res){
+    res.render('information.ejs', {data: {type:'information'}});
+});
+
+router.get('/reportLost',function (req, res){
+    var uid = req.session.uid;
+    console.log(uid);
+    data={};
+    if(uid){
+        res.render('information.ejs', {data: {type:'reportLost'}});
+    }else{
+        res.redirect('/');
+    }
+});
+
+router.get('/reportFound',function (req, res){
+    var uid = req.session.uid;
+    console.log(uid);
+    data={};
+    if(uid){
+        res.render('information.ejs', {data: {type:'reportFound'}});
+    }else{
+        res.redirect('/');
+    }
+});
+
+router.get('/lost',function (req, res){
     var db = new sqlite3.Database('sql.db');
 
-    db.all("select * from report",function (error,data) {
-        console.log(data);
-        res.render('information.ejs', {data: data});
+    db.all("select * from report where type='lost'",function (error,data) {
+        res.send(data);
     });
+});
+router.get('/found',function (req, res){
+    var db = new sqlite3.Database('sql.db');
+
+    db.all("select * from report where type='found'",function (error,data) {
+        res.send(data);
+    });
+});
+
+router.post('/submitLost',function (req, res){
+    var uid = req.session.uid;
+    if(!uid){
+        res.send({});
+    }
+    var db = new sqlite3.Database('sql.db');
+    data = req.body;
+    console.log(data);
+    var d=new Date();
+    date = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+    console.log(date);
+    db.run("insert into report values(null,(?),(?),(?),(?),'lost','unclosed',(?),(?),(?),(?))",[
+        data.species,
+        data.eventDate,
+        data.location,
+        uid,
+        data.description,
+        data.title,
+        data.image,
+        date
+    ],function (error,data) {
+        return res.send("success");
+    });
+});
+
+router.post('/submitFound',function (req, res){
+    var uid = req.session.uid;
+    if(!uid){
+        res.send({});
+    }
+    var db = new sqlite3.Database('sql.db');
+    data = req.body;
+    console.log(data);
+    var d=new Date();
+    date = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+    console.log(date);
+    db.run("insert into report values(null,(?),(?),(?),(?),'found','unclosed',(?),(?),(?),(?))",[
+        data.species,
+        data.eventDate,
+        data.location,
+        uid,
+        data.description,
+        data.title,
+        data.image,
+        date
+    ],function (error,data) {
+        return res.send("success");
+    });
+});
 
 
-
-
+router.post('/upImage', function(req, res) {
+    const upload = multer({storage: multer.diskStorage({
+        destination: function (req, file, callback) {
+            callback(null, __dirname + '/../www/public/image/')
+        },
+        filename: function (req, file, callback) {
+            var fileFormat = (file.originalname).split(".")
+            callback(null, file.originalname)
+        }
+    })});
+    const Postupload = upload.single('file');
+    Postupload(req, res, function (err) {
+        if(err){
+            return  console.log(err)
+        }else{
+            res.send(true)
+        }
+    })
+});
 
 
 
@@ -81,6 +182,6 @@ router.get('/',function (req, res){
     //     body.limit = limit
     //     res.render('table.ejs', {data: body})
     // }
-});
+
 
 module.exports = router;
