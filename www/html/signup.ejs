@@ -1,21 +1,24 @@
-<div class='fp-box'>
-    <form role="form">
+<div class='fp-box' data-bind="visible: isSignup">
+    <form>
         <div class="form-group">
-            <input name="username" type="text" class="form-control" id="username" placeholder="Pick a username">
+            <input data-bind="value: username, valueUpdate: 'afterkeydown'" name="username" type="text" class="form-control" id="username" placeholder="Pick a username">
         </div>
         <div class="form-group">
-            <input name="email" type="email" class="form-control" id="email" placeholder="Your email address">
+            <input data-bind="value: email, valueUpdate: 'afterkeydown'" name="email" type="email" class="form-control" id="email" placeholder="Your email address">
         </div>
         <div class="form-group">
-            <input name="password" type="password" class="form-control" id="password" placeholder="Create a password">
+            <input data-bind="value: password, valueUpdate: 'afterkeydown'" name="password" type="password" class="form-control" id="password" placeholder="Create a password">
         </div>
-        <div class="fp-invalid">{{errorMsg}}</div>
+        <div class="form-group">
+            <input data-bind="value: location, valueUpdate: 'afterkeydown'" name="location" type="text" class="form-control" id="location" placeholder="Location">
+        </div>
+        <div class="sign-invalid" data-bind="text:signupErrorMsg"></div>
         <div class="row">
             <div class="col-xs-5">
-                <button type="submit" class="btn btn-success">Sign up</button>
+                <button type="button" class="btn btn-success" data-bind="click: submitSignup">Sign up</button>
             </div>
             <div class="col-xs-7 fp-switch">
-                <p> Have an account? <a href="#">Sign in</a></p>
+                <p> Have an account? <a data-bind="click: switchSign">Sign in</a></p>
             </div>
         </div>
     </form>

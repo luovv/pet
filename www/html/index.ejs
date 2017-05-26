@@ -2,22 +2,23 @@
 <html>
     <%- include head.ejs %>
     <body>
-        <script src="js/index.js"></script>
         <%- include nav.ejs %>
-            <div class="jumbotron auth-bg">
-                <div class="container">
-                    <div class="row auth-container-bg">
-                        <div class="col-sm-6 auth-title">
-                            <h1>Footprint</h1>
-                            <p>Pin your memory on map</p>
-                        </div>
-                        <div class="col-sm-6">
-                            <!--<%- include signin.ejs %>-->
-                            <%- include signup.ejs %>
-                            <button type='button' class="btn btn-info">Explore without sign up!</button>
-                        </div>
+        <div class="jumbotron auth-bg">
+            <div class="container">
+                <div class="row auth-container-bg">
+                    <div class="col-sm-6 auth-title">
+                        <h1>Footprint</h1>
+                        <p>Pin your memory on map</p>
+                        <p>Welcome <span data-bind="text:username"></span></p>
+                        <p><a href="/home" class="btn btn-info">Explore without sign up!</a></p>
+                    </div>
+                    <div class="col-sm-6">
+                        <%- include signin.ejs %>
+                        <%- include signup.ejs %>
                     </div>
                 </div>
             </div>
+        </div>
+        <script src="js/index.js"></script>
     </body>
 </html>

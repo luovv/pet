@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<%- include head.ejs %>
+<body>
+<script src="js/index.js"></script>
+<%- include nav.ejs %>
+<div class="jumbotron auth-bg">
+    <div class="container">
+        <div class="row auth-container-bg">
+            <div class="col-sm-6 auth-title">
+                <h1>Footprint</h1>
+                <p>Pin your memory on map</p>
+                <% if (data.signin == true) { %>
+                <p>Welcome, <%- data.username %></p>
+                <% } else {%>
+                <p><a type='button' class="btn btn-info" href="/">I'd like to sign up</a></p>
+                <% } %>
+            </div>
+            <div class="col-sm-6">
+                <div>
+                    <div class="row">
+                        <div class="col-xs-6"><a href="/information" class="btn-primary index-btn">Information</a></div>
+                        <div class="col-xs-6"><a href="/volunteer" class="btn-warning index-btn">Volunteers</a></div>
+                    </div>
+                    <div class="row">
+                        <% if (data.signin == true) { %>
+                            <div class="col-xs-6"><a href="" class="btn-info index-btn">Report Found</a></div>
+                            <div class="col-xs-6"><a href="" class="btn-success index-btn">Report Lose</a></div>
+                        <% } else {%>
+                            <h1><a href="/">注册</a>使用report功能</h1>
+                            <!--<div class="col-xs-6 btn-default index-btn">Report Found</div>-->
+                            <!--<div class="col-xs-6 btn-default index-btn">Report Lose</div>-->
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

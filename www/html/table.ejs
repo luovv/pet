@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>come back cat - <%= data.main %></title>
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="img/favicon.ico" mce_href="favicon.ico" rel="icon" type="image/x-icon" />
+    <!-- css -->
+    <link rel="stylesheet" href="css/awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css" id="LoginStyle">
+    <!-- module -->
+    <script src="js/module/jquery.js"></script>
+    <script src="js/module/json.js"></script>
+</head>
+<body data-main="<%= data.main %>" data-module="<%= data.module %>">
+<div class="page-menu">
+    <div class="width">
+        <div class="page-menu-tab">
+            <a href="/">Home</a>
+            <a href="/Information?main=Looking&module=Lose">Information</a>
+            <a href="/Information?main=Volunteers&module=Get">Volunteers</a>
+            <% if (data.Login == false){ %>
+            <a href="/Login">Login</a>
+            <% } %>
+        </div>
+        <div class="page-menu-user">
+            <% if (data.Login == true){ %>
+            <img src="<%= data.UserLogo %>" class="page-menu-user-logo">
+            <i class="fa fa-caret-down page-menu-user-down"></i>
+            <div class="page-menu-user-data">
+                <span><%= data.LoginName %></span>
+                <span>Personal</span>
+                <span id="UserExit">Exit</span>
+            </div>
+            <% } %>
+        </div>
+    </div>
+</div>
+<div class="information">
+    <div class="width">
+        <% if (data.main == 'Looking') { %>
+        <% if (data.module == 'Lose') { %>
+        <div class="upinfo">
+            <div class="newmain-title" data="Lose">I am looking for...</div>
+            <div class="newmain-title-note">Fill in your relevant information here or upload a picture of the cat</div>
+            <input placeholder="Your title" class="upinfo-body-title">
+            <div class="upinfo-body">
+                <div class="upinfo-body-upimg">
+                    <form id="upinfo-body-upimg-form" enctype="multipart/form-data" method="post" action="/upImage">
+                        <input type="file" id="upinfo-body-upimg" name="file">
+                    </form>
+                    <i class="fa fa-file-image-o"></i>
+                </div>
+                <div class="upinfo-body-note">
+                    <textarea placeholder="You want to say"></textarea>
+                </div>
+            </div>
+            <div class="upinfo-emit">
+                <button>Submit</button>
+            </div>
+        </div>
+        <div class="information-page-switch">
+            <button data="Lose">I'm looking for</button>
+            <button id="information-page-switch-on" data="Found">I have found the</button>
+        </div>
+        <% }else if (data.module == 'Found'){ %>
+        <div class="upinfo">
+            <div class="newmain-title"  data="Found">I have found the!</div>
+            <div class="newmain-title-note">Fill in your relevant information here or upload a picture of the cat</div>
+            <input placeholder="Your title..." class="upinfo-body-title">
+            <div class="upinfo-body">
+                <div class="upinfo-body-upimg">
+                    <form id="upinfo-body-upimg-form" enctype="multipart/form-data" method="post" action="/upImage">
+                        <input type="file" id="upinfo-body-upimg" name="file">
+                    </form>
+                    <i class="fa fa-file-image-o"></i>
+                </div>
+                <div class="upinfo-body-note">
+                    <textarea placeholder="You want to say..."></textarea>
+                </div>
+            </div>
+            <div class="upinfo-emit">
+                <button>Submit</button>
+            </div>
+        </div>
+        <div class="information-page-switch">
+            <button id="information-page-switch-on" data="Lose">I'm looking for</button>
+            <button data="Found">I have found the</button>
+        </div>
+        <% } %>
+        <% }else if (data.main == 'Volunteers') { %>
+        <% if (data.module == 'Get') { %>
+        <div class="information-page-switch">
+            <button id="information-page-switch-on" data="Get">I want to take care of</button>
+            <button data="Out">I want to give it to someone else</button>
+        </div>
+        <div class="upinfo">
+            <input placeholder="Your title..." class="upinfo-body-title">
+            <div class="upinfo-body">
+                <div class="upinfo-body-upimg">
+                    <form id="upinfo-body-upimg-form" enctype="multipart/form-data" method="post" action="/upImage">
+                        <input type="file" id="upinfo-body-upimg" name="file">
+                    </form>
+                    <i class="fa fa-file-image-o"></i>
+                </div>
+                <div class="upinfo-body-note">
+                    <textarea placeholder="You want to say..."></textarea>
+                </div>
+            </div>
+            <div class="upinfo-emit">
+                <button>Submit</button>
+            </div>
+        </div>
+        <% }else if (data.module == 'Out'){ %>
+        <div class="information-page-switch">
+            <button data="Get">I want to take care of</button>
+            <button id="information-page-switch-on" data="Out">I want to give it to someone else</button>
+        </div>
+        <div class="upinfo">
+            <input placeholder="Your title..." class="upinfo-body-title">
+            <div class="upinfo-body">
+                <div class="upinfo-body-upimg">
+                    <form id="upinfo-body-upimg-form" enctype="multipart/form-data" method="post" action="/upImage">
+                        <input type="file" id="upinfo-body-upimg" name="file">
+                    </form>
+                    <i class="fa fa-file-image-o"></i>
+                </div>
+                <div class="upinfo-body-note">
+                    <textarea placeholder="You want to say..."></textarea>
+                </div>
+            </div>
+            <div class="upinfo-emit">
+                <button>Submit</button>
+            </div>
+        </div>
+        <% }else{ %>
+        <div class="newVolunteers">
+            <button>Release</button>
+        </div>
+        <% } %>
+        <% } %>
+        <div class="information-page" data="">
+            <% for (let i of data.news) { %>
+            <div class="information-page-num" data-id="<%= i.id %>">
+                <span class="title"><%= i.title %></span>
+                <p class="text"><%= i.body.slice(100) %></p>
+                <div class="information-page-data">
+                    <span><i class="fa fa-clock-o"></i><%= i.time %></span>
+                    <span><i class="fa fa-eye"></i><%= i.eye %></span>
+                    <span><i class="fa fa-commenting"></i><%= i.commenting %></span>
+                </div>
+            </div>
+            <% } %>
+        </div>
+        <div class="setpage">
+            <div class="setpage-next">
+                <button id="page-limit-next">next</button>
+            </div>
+            <div class="setpage-sum">
+                <input placeholder="<%= data.limit %>" id="page-limit" val="<%= data.limit %>"> / <%= data.page %>
+            </div>
+        </div>
+        <div class="bottom"></div>
+    </div>
+</div>
+</body>
+<script>
+    $().ready(function(){
+        $('#UserExit').click(function(){
+            location.href = 'http://' + location.host + '/Exit'
+        })
+        $('.page-menu-user').click(function(){
+            if($(this).attr('data') == undefined || $(this).attr('data') == 'off'){
+                $('.page-menu-user i').addClass('fa-caret-up').removeClass('fa-caret-down')
+                $('.page-menu-user-data').addClass('page-menu-user-data-on')
+                $(this).attr('data', 'on')
+            }else
+            if($(this).attr('data') == 'on'){
+                $('.page-menu-user i').removeClass('fa-caret-up').addClass('fa-caret-down')
+                $('.page-menu-user-data').removeClass('page-menu-user-data-on')
+                $(this).attr('data', 'off')
+            }
+        })
+        $('.information-page-switch button').click(function(){
+            var data = $('body').attr('data-module')
+            if(data == 'Lose' || data == 'Found'){
+                data = data == 'Lose' ? 'Found' : 'Lose'
+            }else
+            if(data == 'Get' || data == 'Out'){
+                data = data == 'Get' ? 'Out' : 'Get'
+            }
+            location.href = 'http://' + location.host + '/Information?main=' + $('body').attr('data-main') + '&module=' + data + '&limit=' + $('#page-limit').attr('placeholder')
+        })
+        $('.information-page-num').click(function(){
+            var DynamicId = $(this).attr('data-id')
+            location.href = 'http://' + location.host + '/DynamicDetails?main=' + $('body').attr('data-main') + '&module=' + $('body').attr('data-module') + '&DynamicId=' + DynamicId
+        })
+        $('#page-limit-next').click(function(){
+            var limit = $('#page-limit').attr('placeholder') - ''
+            limit += 1
+            location.href = 'http://' + location.host + '/Information?main=' + $('body').attr('data-main') + '&module=' + $('body').attr('data-module') + '&limit=' + limit
+        })
+        $('#page-limit').focus(function(){
+            $(this).keyup(function(event){
+                if (event.which == 13) {
+                    var limit = $('#page-limit').val()
+                    location.href = 'http://' + location.host + '/Information?main=' + $('body').attr('data-main') + '&module=' + $('body').attr('data-module') + '&limit=' + limit
+                }
+            })
+        })
+        $('.newVolunteers button').click(function(){
+            location.href = 'http://' + location.host + '/Information?main=' + $('body').attr('data-main') + '&module=Get&limit=1'
+        })
+        document.getElementById('upinfo-body-upimg').onchange = function(){
+            var file = document.getElementById('upinfo-body-upimg').files[0]
+            if(file){
+                var xhr = new XMLHttpRequest()
+                var fd = new FormData(document.getElementById('upinfo-body-upimg-form'))
+                xhr.addEventListener("load", function(){
+                    $('.upinfo-body-upimg').css('background-image', 'url(/updata/' + file.name +')')
+                }, false);
+                xhr.open("POST", "/upImage")
+                xhr.send(fd)
+            }
+        }
+        $('.upinfo-emit button').click(function(){
+            var GetTime = function(){
+                var myDate = new Date()
+                return `${myDate.getFullYear()}-${myDate.getMonth() + 1}-${myDate.getDate()}`
+            }
+            var file = document.getElementById('upinfo-body-upimg').files[0]
+            var main = $('body').attr('data-main')
+            var module = $('body').attr('data-module')
+            $.post('/newInformation', {
+                main: $('body').attr('data-main'),
+                type: $('body').attr('data-module'),
+                title: $('.upinfo-body-title').val(),
+                body: $('.upinfo-body-note textarea').val(),
+                time: GetTime(),
+                img: '/updata/' + file.name
+            }, function(data){
+                if(data != false){
+                    location.href = 'http://' + location.host + '/Information?main=' + main + '&module=' + module + '&limit=1'
+                }
+            })
+        })
+    })
+</script>
+</html>

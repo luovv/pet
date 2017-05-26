@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>come back cat</title>
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="img/favicon.ico" mce_href="favicon.ico" rel="icon" type="image/x-icon" />
+    <!-- css -->
+    <link rel="stylesheet" href="css/awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css" id="LoginStyle">
+    <!-- module -->
+    <script src="js/module/jquery.js"></script>
+    <script src="js/module/json.js"></script>
+</head>
+<body data-main="<%= data.main %>" data-module="<%= data.module %>" data-DynamicId="<%= data.DynamicId %>">
+<div class="page-menu">
+    <div class="width">
+        <div class="page-menu-tab">
+            <a href="/">Home</a>
+            <a href="/Information?main=Looking&module=Lose">Information</a>
+            <a href="/Information?main=Volunteers&module=Get">Volunteers</a>
+            <% if (data.Login == false){ %>
+            <a href="/Login">Login</a>
+            <% } %>
+        </div>
+        <div class="page-menu-user">
+            <% if (data.Login == true){ %>
+            <img src="<%= data.UserLogo %>" class="page-menu-user-logo">
+            <i class="fa fa-caret-down page-menu-user-down"></i>
+            <div class="page-menu-user-data">
+                <span><%= data.LoginName %></span>
+                <span>Personal</span>
+                <span id="UserExit">Exit</span>
+            </div>
+            <% } %>
+        </div>
+    </div>
+</div>
+<div class="Information-text">
+    <div class="width">
+        <div class="Information-text-title"><%= data.title %></div>
+        <div class="information-page-data">
+            <span><i class="fa fa-clock-o"></i><%= data.time %></span>
+            <span><i class="fa fa-eye"></i><%= data.eye %></span>
+            <span><i class="fa fa-commenting"></i><%= data.Comments.lenght %></span>
+        </div>
+        <div class="Information-text-photo">
+            <div class="Information-text-photo-img" style="background-image: url(<%= data.img %>);"></div>
+        </div>
+        <div class="Information-text-body">
+            <p><%= data.body %></p>
+        </div>
+        <div class="Information-text-thisYouComments">
+            <span>Comments</span>
+            <textarea placeholder="write down your comments"></textarea>
+            <button>Updata Comments</button>
+        </div>
+        <script>
+            $('#UserExit').click(function(){
+                location.href = 'http://' + location.host + '/Exit'
+            })
+            $('.page-menu-user').click(function(){
+                if($(this).attr('data') == undefined || $(this).attr('data') == 'off'){
+                    $('.page-menu-user i').addClass('fa-caret-up').removeClass('fa-caret-down')
+                    $('.page-menu-user-data').addClass('page-menu-user-data-on')
+                    $(this).attr('data', 'on')
+                }else
+                if($(this).attr('data') == 'on'){
+                    $('.page-menu-user i').removeClass('fa-caret-up').addClass('fa-caret-down')
+                    $('.page-menu-user-data').removeClass('page-menu-user-data-on')
+                    $(this).attr('data', 'off')
+                }
+            })
+            var GetTime = function(){
+                var myDate = new Date()
+                return `${myDate.getFullYear()}-${myDate.getMonth() + 1}-${myDate.getDate()}`
+            }
+            $('.Information-text-thisYouComments button').click(function(){
+                var Comments = $('.Information-text-thisYouComments textarea').val()
+                var time = GetTime()
+                var main = $('body').attr('data-main')
+                var module = $('body').attr('data-module')
+                var DynamicId = $('body').attr('data-DynamicId')
+                $.post('/UpdataComments', {
+                    Comments:Comments,
+                    time:time,
+                    main:main,
+                    module:module,
+                    DynamicId:DynamicId
+                }, function(data){
+                    if(data == true){
+                        document.location.reload(true)
+                    }
+                })
+            })
+        </script>
+        <div class="Information-text-Comments">
+            <% for (let I of data.Comments ){ %>
+            <div class="Information-text-Comments-info">
+                <div class="Comments-info-userData">
+                    <span class="Comments-info-userData-name"><%= I.name %></span>
+                    <span class="Comments-info-userData-time"><%= I.time %></span>
+                </div>
+                <p><%= I.body %></p>
+            </div>
+            <% } %>
+        </div>
+    </div>
+</div>
+</body>
+</html>
